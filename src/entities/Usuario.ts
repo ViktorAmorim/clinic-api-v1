@@ -18,7 +18,7 @@ export class Usuario {
   id!: string;
 
   @Column("varchar")
-  name!: string;
+  nome!: string;
 
   @Column("varchar", { unique: true })
   email!: string;
