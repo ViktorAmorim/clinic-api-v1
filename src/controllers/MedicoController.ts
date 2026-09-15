@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { AppDataSource } from "../data-source";
 import { Medico } from "../entities/Medico";
+import { MedicoResponseDTO } from "../dtos/usuario/MedicoResponseDTO";
 
 const medicoRepository = AppDataSource.getRepository(Medico);
 
@@ -8,6 +9,12 @@ export class MedicoController {
   //GET /medicos -public, sem autenticação
   async listar(req: Request, res: Response) {
     const medicos = await medicoRepository.find();
+
+    const resposta = medicos.map((m) => ({
+      nome: m.usuario.nome,
+      email: m.usuario.email,
+      especialidade: new MedicoResponseDTO(m).especilidade,
+    }));
     return res.json(medicos);
   }
 
